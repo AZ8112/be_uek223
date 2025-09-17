@@ -35,4 +35,10 @@ public class UserDTO extends AbstractDTO {
     this.roles = roles;
   }
 
+  @Getter
+  @Setter
+  public static class BaseUserDTO extends AbstractDTO {
+    private String firstName;
+    private String lastName;
+  }
 }
