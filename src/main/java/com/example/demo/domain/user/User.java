@@ -3,9 +3,8 @@ package com.example.demo.domain.user;
 import com.example.demo.core.generic.AbstractEntity;
 import com.example.demo.domain.blogpost.Blogpost;
 import com.example.demo.domain.role.Role;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+
+import java.util.*;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -38,9 +37,9 @@ public class User extends AbstractEntity {
              inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new HashSet<>();
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "blogpost", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "blogposts")
-  private Set<Blogpost> blogposts = new HashSet<>();
+  private List<Blogpost> blogposts = new ArrayList<>();
 
   public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles, Set<Blogpost> blogposts) {
     super(id);
