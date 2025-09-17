@@ -28,6 +28,10 @@ public class Blogpost extends AbstractEntity {
     @Size(min = 5, max = 8000)
     private String text;
 
+    @NotNull
+    @Column(name = "category", nullable = false)
+    private BlogpostCategoryEnum category;
+
     @ManyToOne
     @JoinColumn(name = "author", nullable = false)
     private User author;

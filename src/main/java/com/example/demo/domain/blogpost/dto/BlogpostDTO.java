@@ -1,6 +1,7 @@
 package com.example.demo.domain.blogpost.dto;
 
 import com.example.demo.core.generic.AbstractDTO;
+import com.example.demo.domain.blogpost.BlogpostCategoryEnum;
 import com.example.demo.domain.user.User;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,6 +19,8 @@ public class BlogpostDTO extends AbstractDTO {
     @NotNull
     @Size(min = 1, max = 8000)
     private String text;
+    @NotNull
+    private BlogpostCategoryEnum category;
     private LocalDateTime createdAt;
     private User author;
 }
