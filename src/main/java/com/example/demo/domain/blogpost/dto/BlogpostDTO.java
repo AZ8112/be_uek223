@@ -2,7 +2,7 @@ package com.example.demo.domain.blogpost.dto;
 
 import com.example.demo.core.generic.AbstractDTO;
 import com.example.demo.domain.blogpost.BlogpostCategoryEnum;
-import com.example.demo.domain.user.User;
+import com.example.demo.domain.user.dto.UserDTO;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class BlogpostDTO extends AbstractDTO {
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 3, max = 80)
     private String title;
     @NotNull
     @Size(min = 1, max = 8000)
@@ -22,5 +22,5 @@ public class BlogpostDTO extends AbstractDTO {
     @NotNull
     private BlogpostCategoryEnum category;
     private LocalDateTime createdAt;
-    private User author;
+    private UserDTO.BaseUserDTO author;
 }

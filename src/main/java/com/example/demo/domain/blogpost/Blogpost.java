@@ -29,7 +29,8 @@ public class Blogpost extends AbstractEntity {
     private String text;
 
     @NotNull
-    @Column(name = "category", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false, length = 50)
     private BlogpostCategoryEnum category;
 
     @ManyToOne
