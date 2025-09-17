@@ -4,6 +4,7 @@ import com.example.demo.core.generic.AbstractService;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 public interface BlogpostService extends AbstractService<Blogpost> {
     /**
@@ -16,7 +17,7 @@ public interface BlogpostService extends AbstractService<Blogpost> {
      * @throws IllegalArgumentException if the name is null or blank
      * @see Blogpost
      */
-    Blogpost updateBlogpost(String id, Blogpost blogpost)
+    Blogpost updateBlogpost(UUID id, Blogpost blogpost)
             throws NoSuchElementException, IllegalArgumentException;
 
     /**
@@ -26,5 +27,5 @@ public interface BlogpostService extends AbstractService<Blogpost> {
      * @throws EntityNotFoundException if blogpost not found
      * @see Blogpost
      */
-    void deleteBlogpost(String id) throws EntityNotFoundException;
+    void deleteBlogpost(UUID id) throws EntityNotFoundException;
 }
