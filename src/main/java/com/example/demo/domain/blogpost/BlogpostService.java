@@ -2,5 +2,19 @@ package com.example.demo.domain.blogpost;
 
 import com.example.demo.core.generic.AbstractService;
 
+import java.util.NoSuchElementException;
+
 public interface BlogpostService extends AbstractService<Blogpost> {
+    /**
+     * update name of blogpost entity by given id
+     *
+     * @param id      blogpost id
+     * @param blogpost values to be updated to
+     * @return updated blogpost with the updated name
+     * @throws NoSuchElementException   if the blogpost was not found
+     * @throws IllegalArgumentException if the name is null or blank
+     * @see Blogpost
+     */
+    Blogpost updateBlogpost(String id, Blogpost blogpost)
+            throws NoSuchElementException, IllegalArgumentException;
 }
