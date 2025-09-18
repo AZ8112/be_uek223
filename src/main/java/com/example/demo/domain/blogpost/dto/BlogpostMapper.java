@@ -10,8 +10,9 @@ import java.util.Collection;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BlogpostMapper extends AbstractMapper<Blogpost, BlogpostDTO> {
-    @IterableMapping(qualifiedByName = "toBlogpostDTO")
+    BlogpostDTO toDTO(Blogpost blogpost);
     Collection<BlogpostDTO> toDTOs(Collection<Blogpost> blogposts);
 
+    Blogpost fromDTO(BlogpostDTO dto);
     Collection<Blogpost> fromDTOs(Collection<BlogpostDTO> dtos);
 }

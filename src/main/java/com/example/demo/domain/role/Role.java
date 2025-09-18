@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +27,7 @@ import lombok.experimental.Accessors;
 public class Role extends AbstractEntity {
 
   @Column(name = "name", nullable = false, unique = true)
+  @Size(max = 255)
   private String name;
 
   @ManyToMany(fetch = FetchType.EAGER)
