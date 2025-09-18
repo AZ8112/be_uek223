@@ -29,11 +29,11 @@ public class User extends AbstractEntity {
   private String lastName;
 
   @Column(name = "email", unique = true, nullable = false)
-  @Size(max = 50)
+  @Size(max = 200)
   private String email;
 
   @Column(name = "password")
-  @Size(max = 50)
+  @Size(max = 200)
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -41,8 +41,7 @@ public class User extends AbstractEntity {
              inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new HashSet<>();
 
-  @OneToMany(mappedBy = "blogpost", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "blogposts")
+  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Blogpost> blogposts = new ArrayList<>();
 
   public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles, ArrayList<Blogpost> blogposts) {
