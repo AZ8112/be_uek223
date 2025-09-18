@@ -2,7 +2,13 @@ package com.example.demo.domain.blogpost;
 
 import com.example.demo.core.generic.AbstractServiceImpl;
 import com.example.demo.domain.blogpost.dto.BlogpostDTO;
+import com.example.demo.domain.user.User;
+import com.example.demo.domain.role.Role;
+import com.example.demo.domain.user.UserDetailsImpl;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.*;
@@ -11,6 +17,7 @@ import java.util.*;
 @Service
 public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implements BlogpostService {
     private final BlogpostRepository blogpostRepository;
+    private static final String NOT_FOUND_BLOGPOST = "Blogpost not found with id: ";
 
     public BlogpostServiceImpl(BlogpostRepository blogpostRepository) {
         this.blogpostRepository = blogpostRepository;
@@ -41,18 +48,27 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
     @Override
     public Blogpost updateBlogpost(UUID id, BlogpostDTO blogpostDTO)
             throws NoSuchElementException, IllegalArgumentException {
-        log.info("Updating blogpost with id: {}", id);
-        if (blogpostDTO == null) {
-            log.error("Blogpost with id {} is null -> cannot update", id);
-            throw new IllegalArgumentException(String.format("The given blogpost with id: '%s' cannot be null", id));
-        }
-
         Blogpost existingBlogpost = repository.findById(id)
                 .orElseThrow(() -> {
                     log.error("Blogpost with id {} not found in repository", id);
                     return new NoSuchElementException(
                             String.format("Blogpost with id: '%s' was not found", id));
                 });
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+        User currentUser = userDetails.user();
+
+        if (!existingBlogpost.getAuthor().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("You do not have permission to update this blogpost");
+        }
+
+        log.info("Updating blogpost with id: {}", id);
+        if (blogpostDTO == null) {
+            log.error("Blogpost with id {} is null -> cannot update", id);
+            throw new IllegalArgumentException(String.format("The given blogpost with id: '%s' cannot be null", id));
+        }
+
         log.debug("Found blogpost with id {} -> updating fields", id);
         existingBlogpost.setTitle(blogpostDTO.getTitle());
         existingBlogpost.setText(blogpostDTO.getText());
@@ -65,13 +81,15 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
      */
     @Override
     public void deleteBlogpost(UUID id) throws EntityNotFoundException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+        User currentUser = userDetails.user();
         log.info("Deleting blogpost with id: {}", id);
-        if (!repository.existsById(id)) {
-            log.warn("Attempted to delete non-existing blogpost with id {}", id);
-            throw new EntityNotFoundException(String.format("Blogpost with id: %s doesn't exist", id));
-        } else {
-            repository.deleteById(id);
-            log.info("Successfully deleted blogpost with id: {}", id);
+        Blogpost existingBlogpost = blogpostRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(NOT_FOUND_BLOGPOST + id));
+        if (!existingBlogpost.getAuthor().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("You do not have permission to update this blogpost");
         }
+        blogpostRepository.delete(existingBlogpost);
     }
 }

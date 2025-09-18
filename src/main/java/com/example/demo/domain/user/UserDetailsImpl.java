@@ -4,9 +4,9 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.example.demo.domain.authority.Authority;
 
 public record UserDetailsImpl(User user) implements UserDetails {
-
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return user.getRoles()
@@ -15,6 +15,11 @@ public record UserDetailsImpl(User user) implements UserDetails {
                               .stream())
                .map(a -> new SimpleGrantedAuthority(a.getName()))
                .toList();
+  }
+
+  public boolean hasAuthority(String authorityName) {
+    return user.getRoles().stream().flatMap(role -> role.getAuthorities().stream())
+            .map(Authority::getName).anyMatch(auth->auth.equals(authorityName));
   }
 
   @Override
