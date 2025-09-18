@@ -45,6 +45,28 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
 
     }
 
+    public List<Blogpost> findBlogpostsByAuthor(UUID authorId) {
+        List<Blogpost> posts = blogpostRepository.findByAuthor(authorId);
+        if (posts.isEmpty()){
+            log.warn("No blogposts found for author with ID {}", authorId);
+        } else {
+            log.info("{} blogposts found for author with ID {}", posts.size(), authorId);
+        }
+        return posts;
+    }
+
+    public Blogpost createBlogpost(Blogpost newBlogpost){
+        if(newBlogpost == null ||
+                newBlogpost.getTitle() == null ||
+                newBlogpost.getText() == null ||
+                newBlogpost.getCategory() == null
+        ){
+            throw new IllegalArgumentException("Invalid blogpost data: title, text and category cannot be null.");
+        }
+        log.info("Created new Blogpost: " + newBlogpost.getTitle());
+        return blogpostRepository.save(newBlogpost);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -95,29 +117,4 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         }
         blogpostRepository.delete(existingBlogpost);
     }
-
-    public List<Blogpost> findBlogpostsByAuthor(UUID authorId) {
-        List<Blogpost> posts = blogpostRepository.findByAuthor(authorId);
-        if (posts.isEmpty()){
-            log.warn("No blogposts found for author with ID {}", authorId);
-        } else {
-            log.info("{} blogposts found for author with ID {}", posts.size(), authorId);
-        }
-        return posts;
-    }
-
-    public Blogpost createBlogpost(Blogpost newBlogpost){
-        if(newBlogpost == null ||
-           newBlogpost.getTitle() == null ||
-           newBlogpost.getText() == null ||
-           newBlogpost.getCategory() == null
-        ){
-            throw new IllegalArgumentException("Invalid blogpost data: title, text and category cannot be null.");
-        }
-        log.info("Created new Blogpost: " + newBlogpost.getTitle());
-        return blogpostRepository.save(newBlogpost);
-    }
-
-
-
 }
