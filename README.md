@@ -1,4 +1,4 @@
-# OurSpace - üK223
+# OurSpace - Blogposts - üK223
 
 Dieses Projekt beinhaltet 4 Entitäten, User, Authority, Role und Blogpost.
 
