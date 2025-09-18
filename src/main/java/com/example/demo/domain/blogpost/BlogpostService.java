@@ -12,4 +12,6 @@ public interface BlogpostService extends AbstractService<Blogpost> {
     Blogpost findBlogpostById(UUID id);
 
     List<Blogpost> findBlogpostsByAuthor(UUID authorId);
+
+    Blogpost createBlogpost(Blogpost newBlogpost);
 }
