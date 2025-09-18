@@ -28,6 +28,11 @@ public class Blogpost extends AbstractEntity {
     @Size(min = 5, max = 8000)
     private String text;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category", nullable = false, length = 50)
+    private BlogpostCategoryEnum category;
+
     @ManyToOne
     @JoinColumn(name = "author", nullable = false)
     private User author;

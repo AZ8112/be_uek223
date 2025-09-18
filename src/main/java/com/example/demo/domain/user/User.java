@@ -3,11 +3,11 @@ package com.example.demo.domain.user;
 import com.example.demo.core.generic.AbstractEntity;
 import com.example.demo.domain.blogpost.Blogpost;
 import com.example.demo.domain.role.Role;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+
+import java.util.*;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,17 +20,20 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class User extends AbstractEntity {
-
   @Column(name = "first_name")
+  @Size(max = 20)
   private String firstName;
 
   @Column(name = "last_name")
+  @Size(max = 20)
   private String lastName;
 
   @Column(name = "email", unique = true, nullable = false)
+  @Size(max = 200)
   private String email;
 
   @Column(name = "password")
+  @Size(max = 200)
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -38,11 +41,10 @@ public class User extends AbstractEntity {
              inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new HashSet<>();
 
-  @OneToMany(fetch = FetchType.EAGER)
-  @JoinColumn(name = "blogposts")
-  private Set<Blogpost> blogposts = new HashSet<>();
+  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Blogpost> blogposts = new ArrayList<>();
 
-  public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles, Set<Blogpost> blogposts) {
+  public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles, ArrayList<Blogpost> blogposts) {
     super(id);
     this.firstName = firstName;
     this.lastName = lastName;
