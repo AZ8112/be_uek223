@@ -23,7 +23,7 @@ public class UserDTO extends AbstractDTO {
   private String lastName;
 
   @Email
-  @Size(max = 50)
+  @Size(max = 200)
   private String email;
 
   @Valid
