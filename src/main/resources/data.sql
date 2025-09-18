@@ -9,6 +9,23 @@ values ('ba804cb9-fa14-42a5-afaf-be488742fc54', 'admin@example.com', 'James','Bo
 ('ca9c5fc8-40b8-401b-98a0-5c0562509f5f', 'test@example.com', 'Actual','User', '$2a$10$TM3PAYG3b.H98cbRrHqWa.BM7YyCqV92e/kUTBfj85AjayxGZU7d6') -- Password: 1234
 ON CONFLICT DO NOTHING;
 
+INSERT INTO blogpost (id, title, text, category, author, created_at) VALUES
+-- === Admin (James Bond) ===========================================
+('bc921161-d552-490b-804e-7b87f81bd5f3',
+ 'Dynamic Configuration Designer',
+ 'Excepturi autem fuga iure modi ipsam corrupti cum. Vitae est earum veritatis et autem quisquam consequatur. Maiores illum veritatis nisi repellendus. Excepturi odio minus placeat. Perferendis reprehenderit quia ducimus quae amet odit quas voluptas nam. Temporibus quia molestias veniam ut.',
+ 'SPORT',
+ 'ba804cb9-fa14-42a5-afaf-be488742fc54',
+ '2025-09-18 13:43:32.396606'),
+
+('9f6b9c3b-6bfc-4b7e-9f7e-3f0a5a9f3d11',
+ 'Event Stream Optimizer',
+ 'Maiores illum veritatis nisi repellendus. Excepturi odio minus placeat. Perferendis reprehenderit quia.',
+ 'SPORT',
+ 'ba804cb9-fa14-42a5-afaf-be488742fc54',
+ '2025-09-12 10:05:00')
+ON CONFLICT DO NOTHING;
+
 
 --ROLES
 INSERT INTO role(id, name)
