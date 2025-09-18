@@ -19,7 +19,7 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
     }
 
     public List<Blogpost> findAllBlogposts(){
-        List<Blogpost> post = repository.findAll();
+        List<Blogpost> post = blogpostRepository.findAll();
         if (post.isEmpty()){
             log.warn("No blogposts found in the database");
         } else {
@@ -36,4 +36,17 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
                 });
 
     }
+
+    public List<Blogpost> findBlogpostsByAuthor(UUID authorId) {
+        List<Blogpost> posts = blogpostRepository.findByAuthor(authorId);
+        if (posts.isEmpty()){
+            log.warn("No blogposts found for author with ID {}", authorId);
+        } else {
+            log.info("{} blogposts found for author with ID {}", posts.size(), authorId);
+        }
+        return posts;
+    }
+
+
+
 }
