@@ -1,6 +1,7 @@
 package com.example.demo.domain.blogpost;
 
 import com.example.demo.core.generic.AbstractServiceImpl;
+import com.example.demo.domain.blogpost.dto.BlogpostDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,8 +10,6 @@ import java.util.*;
 @Log4j2
 @Service
 public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implements BlogpostService {
-
-
     private final BlogpostRepository blogpostRepository;
 
     public BlogpostServiceImpl(BlogpostRepository blogpostRepository) {
@@ -40,10 +39,10 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
      * {@inheritDoc}
      */
     @Override
-    public Blogpost updateBlogpost(UUID id, Blogpost blogpost)
+    public Blogpost updateBlogpost(UUID id, BlogpostDTO blogpostDTO)
             throws NoSuchElementException, IllegalArgumentException {
         log.info("Updating blogpost with id: {}", id);
-        if (blogpost == null) {
+        if (blogpostDTO == null) {
             log.error("Blogpost with id {} is null -> cannot update", id);
             throw new IllegalArgumentException(String.format("The given blogpost with id: '%s' cannot be null", id));
         }
@@ -55,10 +54,8 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
                             String.format("Blogpost with id: '%s' was not found", id));
                 });
         log.debug("Found blogpost with id {} -> updating fields", id);
-        existingBlogpost.setTitle(blogpost.getTitle());
-        existingBlogpost.setText(blogpost.getText());
-        existingBlogpost.setAuthor(blogpost.getAuthor());
-        existingBlogpost.setCreatedAt(blogpost.getCreatedAt());
+        existingBlogpost.setTitle(blogpostDTO.getTitle());
+        existingBlogpost.setText(blogpostDTO.getText());
         log.info("Successfully updated blogpost with id: {}", id);
         return repository.save(existingBlogpost);
     }

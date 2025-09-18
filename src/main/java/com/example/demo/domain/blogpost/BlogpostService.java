@@ -1,6 +1,7 @@
 package com.example.demo.domain.blogpost;
 
 import com.example.demo.core.generic.AbstractService;
+import com.example.demo.domain.blogpost.dto.BlogpostDTO;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.NoSuchElementException;
@@ -17,7 +18,7 @@ public interface BlogpostService extends AbstractService<Blogpost> {
      * @throws IllegalArgumentException if the name is null or blank
      * @see Blogpost
      */
-    Blogpost updateBlogpost(UUID id, Blogpost blogpost)
+    Blogpost updateBlogpost(UUID id, BlogpostDTO blogpostDTO)
             throws NoSuchElementException, IllegalArgumentException;
 
     /**
