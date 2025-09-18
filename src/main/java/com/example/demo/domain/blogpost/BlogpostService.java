@@ -6,6 +6,9 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import java.util.List;
+import java.util.UUID;
+
 public interface BlogpostService extends AbstractService<Blogpost> {
     /**
      * update name of blogpost entity by given id
@@ -20,6 +23,13 @@ public interface BlogpostService extends AbstractService<Blogpost> {
     Blogpost updateBlogpost(UUID id, Blogpost blogpost)
             throws NoSuchElementException, IllegalArgumentException;
 
+    List<Blogpost> findAllBlogposts();
+
+    Blogpost findBlogpostById(UUID id);
+
+    List<Blogpost> findBlogpostsByAuthor(UUID authorId);
+
+    Blogpost createBlogpost(Blogpost newBlogpost);
     /**
      * delete a blogpost by its id
      *
