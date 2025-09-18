@@ -2,6 +2,7 @@ package com.example.demo.domain.blogpost;
 
 import com.example.demo.core.generic.AbstractService;
 import com.example.demo.domain.blogpost.dto.BlogpostDTO;
+import com.example.demo.domain.user.User;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -12,7 +13,7 @@ public interface BlogpostService extends AbstractService<Blogpost> {
 
     Blogpost findBlogpostById(UUID id);
 
-    List<Blogpost> findBlogpostsByAuthor(UUID authorId);
+    List<Blogpost> findBlogpostsByAuthor(User author);
 
     Blogpost createBlogpost(Blogpost newBlogpost);
     /**

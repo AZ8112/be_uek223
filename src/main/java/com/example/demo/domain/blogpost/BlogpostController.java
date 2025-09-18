@@ -2,6 +2,7 @@ package com.example.demo.domain.blogpost;
 
 import com.example.demo.domain.blogpost.dto.BlogpostDTO;
 import com.example.demo.domain.blogpost.dto.BlogpostMapper;
+import com.example.demo.domain.user.User;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,8 @@ public class BlogpostController {
 
     @GetMapping("/author/{authorId}")
     @PreAuthorize("hasAuthority('BLOGPOST_READ')")
-    public ResponseEntity<List<BlogpostDTO>> findByAuthor(@PathVariable UUID authorId) {
-        List<Blogpost> authorBlogposts = blogpostService.findBlogpostsByAuthor(authorId);
+    public ResponseEntity<List<BlogpostDTO>> findByAuthor(@PathVariable User author) {
+        List<Blogpost> authorBlogposts = blogpostService.findBlogpostsByAuthor(author);
         List<BlogpostDTO> authorBlogpostDTOS = authorBlogposts.stream().map(blogpostMapper::toDTO).toList();
         return new ResponseEntity<>(authorBlogpostDTOS, HttpStatus.OK);
     }

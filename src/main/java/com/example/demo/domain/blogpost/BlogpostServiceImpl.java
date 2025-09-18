@@ -45,12 +45,12 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
 
     }
 
-    public List<Blogpost> findBlogpostsByAuthor(UUID authorId) {
-        List<Blogpost> posts = blogpostRepository.findByAuthor(authorId);
+    public List<Blogpost> findBlogpostsByAuthor(User author) {
+        List<Blogpost> posts = blogpostRepository.findByAuthor(author);
         if (posts.isEmpty()){
-            log.warn("No blogposts found for author with ID {}", authorId);
+            log.warn("No blogposts found for author with ID {}", author.getId());
         } else {
-            log.info("{} blogposts found for author with ID {}", posts.size(), authorId);
+            log.info("{} blogposts found for author with ID {}", posts.size(), author.getId());
         }
         return posts;
     }
