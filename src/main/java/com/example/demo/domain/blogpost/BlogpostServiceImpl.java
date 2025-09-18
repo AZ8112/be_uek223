@@ -47,6 +47,18 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         return posts;
     }
 
+    public Blogpost createBlogpost(Blogpost newBlogpost){
+        if(newBlogpost == null ||
+           newBlogpost.getTitle() == null ||
+           newBlogpost.getText() == null ||
+           newBlogpost.getCategory() == null
+        ){
+            throw new IllegalArgumentException("Invalid blogpost data: title, text and category cannot be null.");
+        }
+        log.info("Created new Blogpost: " + newBlogpost.getTitle());
+        return blogpostRepository.save(newBlogpost);
+    }
+
 
 
 }
