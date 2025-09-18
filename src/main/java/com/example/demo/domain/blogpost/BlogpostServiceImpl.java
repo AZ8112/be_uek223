@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
     private static final String NOT_FOUND_BLOGPOST = "Blogpost not found with id: ";
 
     public BlogpostServiceImpl(BlogpostRepository blogpostRepository) {
+        super(blogpostRepository);
         this.blogpostRepository = blogpostRepository;
     }
 
@@ -42,7 +45,6 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
                     log.warn("Blogpost with ID {} not found.", id);
                     return new RuntimeException("Blogpost not found");
                 });
-
     }
 
     public List<Blogpost> findBlogpostsByAuthor(User author) {
@@ -63,6 +65,11 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         ){
             throw new IllegalArgumentException("Invalid blogpost data: title, text and category cannot be null.");
         }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+        User currentUser = userDetails.user();
+        newBlogpost.setAuthor(currentUser);
+        newBlogpost.setCreatedAt(LocalDateTime.now());
         log.info("Created new Blogpost: " + newBlogpost.getTitle());
         return blogpostRepository.save(newBlogpost);
     }

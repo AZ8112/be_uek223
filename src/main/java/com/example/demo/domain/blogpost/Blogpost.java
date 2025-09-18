@@ -37,7 +37,7 @@ public class Blogpost extends AbstractEntity {
     @JoinColumn(name = "author", nullable = false)
     private User author;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     public Blogpost(UUID id, String title, String text, User author) {

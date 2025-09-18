@@ -40,6 +40,8 @@ INSERT INTO role_authority(role_id, authority_id)
 VALUES ('d29e709c-0ff1-4f4c-a7ef-09f656c390f1', '2ebf301e-6c61-4076-98e3-2a38b31daf86'),
 ('ab505c92-7280-49fd-a7de-258e618df074', '76d2cbf6-5845-470e-ad5f-2edb9e09a868'),
 ('c6aee32d-8c35-4481-8b3e-a876a39b0c02', '21c942db-a275-43f8-bdd6-d048c21bf5ab'),
+-- Blogpost authorities for default
+('d29e709c-0ff1-4f4c-a7ef-09f656c390f1', '242ff7f7-7e6d-41eb-b52a-59b2e12c5189'),
 -- Blogpost authorities for admin
 ('ab505c92-7280-49fd-a7de-258e618df074', '242ff7f7-7e6d-41eb-b52a-59b2e12c5189'),
 ('ab505c92-7280-49fd-a7de-258e618df074', 'cc9c3170-b2dc-4701-806a-998b74f23650'),
