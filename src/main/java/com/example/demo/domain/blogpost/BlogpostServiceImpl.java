@@ -90,8 +90,14 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
         User currentUser = userDetails.user();
+        boolean isAdmin = currentUser.getRoles().stream()
+                .map(Role::getName)
+                .filter(Objects::nonNull)
+                .anyMatch(n -> n.equalsIgnoreCase("ADMIN"));
 
-        if (!existingBlogpost.getAuthor().getId().equals(currentUser.getId())) {
+        boolean isOwner = Objects.equals(existingBlogpost.getAuthor().getId(), currentUser.getId());
+
+        if (!isAdmin && !isOwner) {
             throw new AccessDeniedException("You do not have permission to update this blogpost");
         }
 
@@ -112,15 +118,20 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
      * {@inheritDoc}
      */
     @Override
-    public void deleteBlogpost(UUID id) throws EntityNotFoundException {
+    public void deleteById(UUID id) throws EntityNotFoundException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
         User currentUser = userDetails.user();
         log.info("Deleting blogpost with id: {}", id);
         Blogpost existingBlogpost = blogpostRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(NOT_FOUND_BLOGPOST + id));
-        if (!existingBlogpost.getAuthor().getId().equals(currentUser.getId())) {
-            throw new AccessDeniedException("You do not have permission to update this blogpost");
+        boolean isAdmin = currentUser.getRoles().stream()
+                .map(Role::getName)
+                .filter(Objects::nonNull)
+                .anyMatch(n -> n.equalsIgnoreCase("ADMIN"));
+        boolean isOwner = Objects.equals(existingBlogpost.getAuthor().getId(), currentUser.getId());
+        if (!isAdmin && !isOwner) {
+            throw new AccessDeniedException("You do not have permission to delete this blogpost");
         }
         blogpostRepository.delete(existingBlogpost);
     }

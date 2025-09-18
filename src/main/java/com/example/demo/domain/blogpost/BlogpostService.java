@@ -9,10 +9,6 @@ import java.util.UUID;
 import java.util.List;
 
 public interface BlogpostService extends AbstractService<Blogpost> {
-    List<Blogpost> findAllBlogposts();
-
-    Blogpost findBlogpostById(UUID id);
-
     List<Blogpost> findBlogpostsByAuthor(User author);
 
     Blogpost createBlogpost(Blogpost newBlogpost);
@@ -36,5 +32,5 @@ public interface BlogpostService extends AbstractService<Blogpost> {
      * @throws EntityNotFoundException if blogpost not found
      * @see Blogpost
      */
-    void deleteBlogpost(UUID id) throws EntityNotFoundException;
+    void deleteById(UUID id) throws EntityNotFoundException;
 }

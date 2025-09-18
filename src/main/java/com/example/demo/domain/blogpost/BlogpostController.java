@@ -58,14 +58,14 @@ public class BlogpostController {
     }
 
     @PutMapping("/{blogpostId}")
-    @PreAuthorize("hasAuthority('BLOGPOST_UPDATE')")
+    @PreAuthorize("hasRole('ADMIN') or hasAuthority('BLOGPOST_UPDATE')")
     public ResponseEntity<BlogpostDTO> updateBlogpost(@Valid @PathVariable UUID blogpostId, @RequestBody @Valid BlogpostDTO blogpostDTO) {
         Blogpost updatedBlogpost = blogpostService.updateBlogpost(blogpostId, blogpostDTO);
         return new ResponseEntity<>(blogpostMapper.toDTO(updatedBlogpost), HttpStatus.OK);
     }
 
     @DeleteMapping("/{blogpostId}")
-    @PreAuthorize("hasAuthority('BLOGPOST_DELETE')")
+    @PreAuthorize("hasRole('ADMIN') or hasAuthority('BLOGPOST_DELETE')")
     public ResponseEntity<Void> deleteById(@PathVariable UUID blogpostId) {
         blogpostService.deleteById(blogpostId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
