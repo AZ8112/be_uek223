@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @Log4j2
 @Service
 public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implements BlogpostService {
@@ -24,7 +27,7 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
     }
 
     public List<Blogpost> findAllBlogposts(){
-        List<Blogpost> post = repository.findAll();
+        List<Blogpost> post = blogpostRepository.findAll();
         if (post.isEmpty()){
             log.warn("No blogposts found in the database");
         } else {
@@ -92,4 +95,29 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         }
         blogpostRepository.delete(existingBlogpost);
     }
+
+    public List<Blogpost> findBlogpostsByAuthor(UUID authorId) {
+        List<Blogpost> posts = blogpostRepository.findByAuthor(authorId);
+        if (posts.isEmpty()){
+            log.warn("No blogposts found for author with ID {}", authorId);
+        } else {
+            log.info("{} blogposts found for author with ID {}", posts.size(), authorId);
+        }
+        return posts;
+    }
+
+    public Blogpost createBlogpost(Blogpost newBlogpost){
+        if(newBlogpost == null ||
+           newBlogpost.getTitle() == null ||
+           newBlogpost.getText() == null ||
+           newBlogpost.getCategory() == null
+        ){
+            throw new IllegalArgumentException("Invalid blogpost data: title, text and category cannot be null.");
+        }
+        log.info("Created new Blogpost: " + newBlogpost.getTitle());
+        return blogpostRepository.save(newBlogpost);
+    }
+
+
+
 }
