@@ -7,6 +7,7 @@ import com.example.demo.domain.role.Role;
 import java.util.*;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,17 +20,20 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class User extends AbstractEntity {
-
   @Column(name = "first_name")
+  @Size(max = 20)
   private String firstName;
 
   @Column(name = "last_name")
+  @Size(max = 20)
   private String lastName;
 
   @Column(name = "email", unique = true, nullable = false)
+  @Size(max = 50)
   private String email;
 
   @Column(name = "password")
+  @Size(max = 50)
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -41,7 +45,7 @@ public class User extends AbstractEntity {
   @JoinColumn(name = "blogposts")
   private List<Blogpost> blogposts = new ArrayList<>();
 
-  public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles, Set<Blogpost> blogposts) {
+  public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles, ArrayList<Blogpost> blogposts) {
     super(id);
     this.firstName = firstName;
     this.lastName = lastName;
