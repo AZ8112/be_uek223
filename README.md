@@ -59,6 +59,11 @@ DELETE   | /blogpost/{blogpostId}         | Löscht einen Blogpost (Muss Owner o
 ![Boot run][bootRun]
 
 ## Verwendung von Postman
+Vorab: Die Datei für die Postman-Tests können direkt im root ordner unter
+
+```OurSpace.postman_collection.json```
+
+gefunden werden.
 
 1. In Postman auf Import klicken
 
@@ -74,10 +79,18 @@ DELETE   | /blogpost/{blogpostId}         | Löscht einen Blogpost (Muss Owner o
 
 ![Run OurSpace][runtest]
 
+Diese collection kann beliebig häufig gerunned werden. 
+
+## Verwendung von JUnit
+Die Tests für JUnit können im Ordner 
+
+```BE_uek223_Me_Az_Le/src/test/java/com.example.demo/webcontext.domain/blogpost/BlogpostControllerTest```
+
+gefunden werden. In diesen Tests werden die Usecases 1 & 4 getestet. Dabei wird das Verhalten auf erfolgreiche, erfolgreiche-fail tests und edge cases überprüft.
+
 ## Swagger
-
+In diesen Tests werden die Usecases 1 - 5 getestet. Mit detaillierten Beschreibungen und Zusammenfassenden Titel um einfach verstehen zu können für was welche Endpoints benutzt werden und wer Zugriff auf diese hat. 
 1. Öffne diese Website: http://localhost:8080/swagger-ui/index.html#/
-
 2. Starte das testen :P
 
 
