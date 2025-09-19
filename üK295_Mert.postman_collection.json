@@ -1,0 +1,572 @@
+{
+	"info": {
+		"_postman_id": "c6a854a1-4e9c-4be0-a1cf-4475ff4d83b9",
+		"name": "üK295_Mert",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39052603"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "GetCustomerById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer/a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerByIdShouldFail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer/a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllCustomer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAccountById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer/account/d1e2f3a4-b5c6-7d8e-9f0a-b1c2d3e4f5a6",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"d1e2f3a4-b5c6-7d8e-9f0a-b1c2d3e4f5a6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAccountByIdShouldFail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer/account/d1e2f3a4-b5c6-7d8e-9f0a-b1c2d3e4f5a",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"d1e2f3a4-b5c6-7d8e-9f0a-b1c2d3e4f5a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomersWithoutAccounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.not.include(\"email\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer?includeAccounts=false",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer"
+							],
+							"query": [
+								{
+									"key": "includeAccounts",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerWithFilter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Max\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer?name=Max&maxBirthday=2000-01-01&includeAccounts=true",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Max"
+								},
+								{
+									"key": "maxBirthday",
+									"value": "2000-01-01"
+								},
+								{
+									"key": "includeAccounts",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "CreateCustomer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let bodyResponse = pm.response.json();\r",
+									"customerId = bodyResponse.id;\r",
+									"pm.environment.set(\"customerId\", customerId);\r",
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"phone\": \"0123456789\",\r\n  \"birthday\": \"1990-01-01\",\r\n  \"accounts\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/customer",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCustomerWithAccount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let bodyResponse = pm.response.json();\r",
+									"accountId = bodyResponse.accounts[0].id;\r",
+									"pm.environment.set(\"accountId\", accountId);\r",
+									"\r",
+									"customerIdTest = bodyResponse.id;\r",
+									"pm.environment.set(\"customerIdTest\", customerIdTest);\r",
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"phone\": \"0123456789\",\r\n  \"birthday\": \"1990-01-01\",\r\n  \"accounts\": [\r\n    {\r\n      \"email\": \"{{$randomEmail}}\",\r\n      \"password\": \"secret\",\r\n      \"createdAt\": \"2025-03-28\"\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/customer",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "UpdateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{$randomFullName}}\",\r\n  \"phone\": \"0124456789\",\r\n  \"birthday\": \"1993-01-01\",\r\n  \"accounts\": [\r\n    {\r\n      \"email\": \"{{$randomEmail}}\",\r\n      \"password\": \"secret\",\r\n      \"createdAt\": \"2025-03-28\"\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/customer/{{customerId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAccount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"secret\",\r\n    \"createdAt\": \"2025-03-28\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/customer/account/{{accountId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"{{accountId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "DeleteCustomer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer/{{customerId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAccount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer/account/{{accountId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"account",
+								"{{accountId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/customer/{{customerIdTest}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"customer",
+								"{{customerIdTest}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
