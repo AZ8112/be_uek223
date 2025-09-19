@@ -6,6 +6,8 @@ import com.example.demo.domain.user.User;
 import com.example.demo.domain.role.Role;
 import com.example.demo.domain.user.UserDetailsImpl;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,14 +31,26 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         this.blogpostRepository = blogpostRepository;
     }
 
-    public List<Blogpost> findAll(){
-        List<Blogpost> post = blogpostRepository.findAll();
-        if (post.isEmpty()){
-            log.warn("No blogposts found in the database");
+    public Page<Blogpost> findAllPaginated(
+            BlogpostCategoryEnum category,
+            Pageable pageable) {
+
+        Page<Blogpost> blogpostPage;
+
+        if (category != null) {
+            blogpostPage = blogpostRepository.findByCategory(category, pageable);
         } else {
-            log.info(post.size() + " blogposts retrieved from database.");
+            blogpostPage = blogpostRepository.findAll(pageable);
         }
-        return post;
+
+        if (blogpostPage.isEmpty()) {
+            log.warn("No blogposts found in the database (category={})", category);
+        } else {
+            log.info("{} blogposts retrieved from database (category={})",
+                    blogpostPage.getNumberOfElements(), category);
+        }
+
+        return blogpostPage;
     }
 
     public Blogpost findById(UUID id){
