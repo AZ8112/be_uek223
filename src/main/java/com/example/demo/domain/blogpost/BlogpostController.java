@@ -35,13 +35,10 @@ public class BlogpostController {
     @Operation(summary = "Get all blogposts with Pagination", description = "Returns a list of all blogposts in the database with author and creation date." +
             " Pagination can be used to filter by the amount of entries that are shown and also which category. Available categories are: ADVICE, HEALTH, SPORT, FOOD, HISTORY")
     @GetMapping
-    @ApiResponse(responseCode = "200", description = "Successfully found courses with pagination information",
-            content = {@Content(mediaType = "application/json")})
-    public ResponseEntity<List<BlogpostDTO>> findAll(
-            @RequestParam(required = false) BlogpostCategoryEnum category,
+    public ResponseEntity<List<BlogpostDTO>> findAllPaginated(
+            @RequestParam(required = false) String category,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
         Page<Blogpost> blogposts = blogpostService.findAllPaginated(category, PageRequest.of(page, size));
         List<BlogpostDTO> blogpostDTOS = blogposts.stream().map(blogpostMapper::toDTO).toList();
         return new ResponseEntity<>(blogpostDTOS, HttpStatus.OK);

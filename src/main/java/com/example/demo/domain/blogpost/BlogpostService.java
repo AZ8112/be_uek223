@@ -12,7 +12,7 @@ import java.util.UUID;
 import java.util.List;
 
 public interface BlogpostService extends AbstractService<Blogpost> {
-    Page<Blogpost> findAllPaginated(BlogpostCategoryEnum category, Pageable pageable);
+    Page<Blogpost> findAllPaginated(String category, Pageable pageable);
     Blogpost findById(UUID id);
     List<Blogpost> findBlogpostsByAuthor(User author);
 

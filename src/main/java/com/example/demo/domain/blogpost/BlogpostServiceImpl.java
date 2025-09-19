@@ -32,19 +32,17 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         this.blogpostRepository = blogpostRepository;
     }
 
-    public Page<Blogpost> findAllPaginated(
-            BlogpostCategoryEnum category,
-            Pageable pageable) {
-
+    public Page<Blogpost> findAllPaginated(String category, Pageable pageable) {
         Page<Blogpost> blogpostPage;
 
-        if (category != null) {
+        if (category != null && !category.isBlank()) {
+            final BlogpostCategoryEnum catEnum;
             try {
-                BlogpostCategoryEnum catEnum = BlogpostCategoryEnum.valueOf(category.toString());
-                blogpostPage = blogpostRepository.findByCategory(catEnum, pageable);
+                catEnum = BlogpostCategoryEnum.valueOf(category.trim().toUpperCase());
             } catch (IllegalArgumentException e) {
                 throw new InvalidCategoryException("Diese Kategorie ist nicht verfügbar: " + category);
             }
+            blogpostPage = blogpostRepository.findByCategory(catEnum, pageable);
         } else {
             blogpostPage = blogpostRepository.findAll(pageable);
         }
@@ -55,9 +53,9 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
             log.info("{} blogposts retrieved from database (category={})",
                     blogpostPage.getNumberOfElements(), category);
         }
-
         return blogpostPage;
     }
+
 
     public Blogpost findById(UUID id){
         return blogpostRepository.findById(id)
