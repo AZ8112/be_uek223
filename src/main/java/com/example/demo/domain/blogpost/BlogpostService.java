@@ -9,6 +9,8 @@ import java.util.UUID;
 import java.util.List;
 
 public interface BlogpostService extends AbstractService<Blogpost> {
+    List<Blogpost> findAll();
+    Blogpost findById(UUID id);
     List<Blogpost> findBlogpostsByAuthor(User author);
 
     Blogpost createBlogpost(Blogpost newBlogpost);

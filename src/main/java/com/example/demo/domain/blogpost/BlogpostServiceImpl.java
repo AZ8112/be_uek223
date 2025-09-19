@@ -29,7 +29,7 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         this.blogpostRepository = blogpostRepository;
     }
 
-    public List<Blogpost> findAllBlogposts(){
+    public List<Blogpost> findAll(){
         List<Blogpost> post = blogpostRepository.findAll();
         if (post.isEmpty()){
             log.warn("No blogposts found in the database");
@@ -39,7 +39,7 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         return post;
     }
 
-    public Blogpost findBlogpostById(UUID id){
+    public Blogpost findById(UUID id){
         return blogpostRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("Blogpost with ID {} not found.", id);
