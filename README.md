@@ -89,9 +89,8 @@ Die Tests für JUnit können im Ordner
 gefunden werden. In diesen Tests werden die Usecases 1 & 4 getestet. Dabei wird das Verhalten auf erfolgreiche, erfolgreiche-fail tests und edge cases überprüft.
 
 ## Swagger
-
+In diesen Tests werden die Usecases 1 - 5 getestet. Mit detaillierten Beschreibungen und Zusammenfassenden Titel um einfach verstehen zu können für was welche Endpoints benutzt werden und wer Zugriff auf diese hat. 
 1. Öffne diese Website: http://localhost:8080/swagger-ui/index.html#/
-
 2. Starte das testen :P
 
 
