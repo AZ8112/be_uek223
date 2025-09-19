@@ -85,6 +85,14 @@ public class CustomGlobalExceptionHandler {
                               .build();
   }
 
+  @ExceptionHandler(InvalidCategoryException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseError handleInvalidCategory(InvalidCategoryException ex) {
+    return new ResponseError()
+            .setTimeStamp(LocalDate.now())
+            .setErrors(Map.of("category", ex.getMessage()))
+            .build();
+  }
 }
 
 

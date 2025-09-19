@@ -1,5 +1,6 @@
 package com.example.demo.domain.blogpost;
 
+import com.example.demo.core.exception.InvalidCategoryException;
 import com.example.demo.core.generic.AbstractServiceImpl;
 import com.example.demo.domain.blogpost.dto.BlogpostDTO;
 import com.example.demo.domain.user.User;
@@ -38,7 +39,12 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         Page<Blogpost> blogpostPage;
 
         if (category != null) {
-            blogpostPage = blogpostRepository.findByCategory(category, pageable);
+            try {
+                BlogpostCategoryEnum catEnum = BlogpostCategoryEnum.valueOf(category.toString());
+                blogpostPage = blogpostRepository.findByCategory(catEnum, pageable);
+            } catch (IllegalArgumentException e) {
+                throw new InvalidCategoryException("Diese Kategorie ist nicht verfügbar: " + category);
+            }
         } else {
             blogpostPage = blogpostRepository.findAll(pageable);
         }
