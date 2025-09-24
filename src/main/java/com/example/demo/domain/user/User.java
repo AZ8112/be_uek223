@@ -7,6 +7,7 @@ import com.example.demo.domain.role.Role;
 import java.util.*;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,19 +22,23 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class User extends AbstractEntity {
   @Column(name = "first_name")
-  @Size(max = 20)
+  @Size(min = 2, max = 20)
+  @NotNull
   private String firstName;
 
   @Column(name = "last_name")
-  @Size(max = 20)
+  @Size(min = 2, max = 20)
+  @NotNull
   private String lastName;
 
   @Column(name = "email", unique = true, nullable = false)
-  @Size(max = 200)
+  @Size(min = 1, max = 200)
+  @NotNull
   private String email;
 
   @Column(name = "password")
-  @Size(max = 200)
+  @Size(min = 5, max = 200)
+  @NotNull
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)

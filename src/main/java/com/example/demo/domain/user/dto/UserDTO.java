@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,13 +18,16 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class UserDTO extends AbstractDTO {
-  @Size(max = 20)
+  @Size(min = 2, max = 20)
+  @NotNull
   private String firstName;
-  @Size(max = 20)
+  @Size(min = 2, max = 20)
+  @NotNull
   private String lastName;
 
   @Email
-  @Size(max = 200)
+  @Size(min = 1, max = 200)
+  @NotNull
   private String email;
 
   @Valid
@@ -40,9 +44,11 @@ public class UserDTO extends AbstractDTO {
   @Getter
   @Setter
   public static class BaseUserDTO extends AbstractDTO {
-    @Size(max = 20)
+    @Size(min = 2, max = 20)
+    @NotNull
     private String firstName;
-    @Size(max = 20)
+    @Size(min = 2, max = 20)
+    @NotNull
     private String lastName;
   }
 }
