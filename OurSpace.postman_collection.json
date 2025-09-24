@@ -1,0 +1,1208 @@
+{
+	"info": {
+		"_postman_id": "bbba3e42-1128-49e3-9f88-3d9fb6989ef2",
+		"name": "OurSpace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39052603"
+	},
+	"item": [
+		{
+			"name": "UC1",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"{{$randomPassword}}\",\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/register",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseHeaders = pm.response.headers;",
+									"let bearerToken = responseHeaders.get(\"Authorization\");",
+									"pm.environment.set(\"bearerToken\", bearerToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateBlogpostAsUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Category is SPORT\", function () {\r",
+									"    let blogpost = pm.response.json();\r",
+									"    pm.expect(blogpost.category).to.eql(\"SPORT\");\r",
+									"});\r",
+									"\r",
+									"let blogpost = pm.response.json();\r",
+									"\r",
+									"if (blogpost && blogpost.id) {\r",
+									"    pm.environment.set(\"createdBlogpostId\", blogpost.id);\r",
+									"    console.log(\"BlogpostId gesetzt:\", blogpost.id);\r",
+									"} else {\r",
+									"    console.log(\"Keine Blogpost ID in Response gefunden\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Hallo Test Titel\",\r\n  \"text\": \"Hallo, Test Text zum verwenden oder so\",\r\n  \"category\": \"SPORT\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/blogposts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UC2",
+			"item": [
+				{
+					"name": "UserLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseHeaders = pm.response.headers;",
+									"let bearerToken = responseHeaders.get(\"Authorization\");",
+									"pm.environment.set(\"bearerToken\", bearerToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBlogpost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Title is 'Veränderter Titel'\", function () {\r",
+									"    let blogpost = pm.response.json();\r",
+									"    pm.expect(blogpost.title).to.eql(\"Veränderter Titel\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Veränderter Titel\",\n  \"text\": \"Verwendeter Text oder so\",\n  \"category\": \"SPORT\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/blogposts/{{createdBlogpostId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"{{createdBlogpostId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteBlogpostById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/blogposts/{{createdBlogpostId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"{{createdBlogpostId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UC3",
+			"item": [
+				{
+					"name": "UserLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseHeaders = pm.response.headers;",
+									"let bearerToken = responseHeaders.get(\"Authorization\");",
+									"pm.environment.set(\"bearerToken\", bearerToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateBlogpostAsUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Category is SPORT\", function () {\r",
+									"    let blogpost = pm.response.json();\r",
+									"    pm.expect(blogpost.category).to.eql(\"SPORT\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"let blogpost = pm.response.json();\r",
+									"\r",
+									"if (blogpost && blogpost.id) {\r",
+									"    pm.environment.set(\"createdBlogpostId\", blogpost.id);\r",
+									"    console.log(\"BlogpostId gesetzt:\", blogpost.id);\r",
+									"} else {\r",
+									"    console.log(\"Keine Blogpost ID in Response gefunden\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Hallo Test Titel\",\r\n  \"text\": \"Hallo, Test Text zum verwenden oder so\",\r\n  \"category\": \"SPORT\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/blogposts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AdminLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseHeaders = pm.response.headers;",
+									"let bearerToken = responseHeaders.get(\"Authorization\");",
+									"pm.environment.set(\"bearerToken\", bearerToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBlogpost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Title is 'Veränderter Titel'\", function () {\r",
+									"    let blogpost = pm.response.json();\r",
+									"    pm.expect(blogpost.title).to.eql(\"Veränderter Titel\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Veränderter Titel\",\n  \"text\": \"Verwendeter Text oder so\",\n  \"category\": \"SPORT\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/blogposts/{{createdBlogpostId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"{{createdBlogpostId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteBlogpostById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/blogposts/{{createdBlogpostId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"{{createdBlogpostId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UC4(Auth deactivated)",
+			"item": [
+				{
+					"name": "getAllBlogpostsAsGuest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse die Response\r",
+									"let blogposts = pm.response.json();\r",
+									"\r",
+									"// Prüfen, ob Array vorhanden\r",
+									"if (Array.isArray(blogposts) && blogposts.length > 0) {\r",
+									"    // Random Index wählen\r",
+									"    let randomIndex = Math.floor(Math.random() * blogposts.length);\r",
+									"    let randomId = blogposts[randomIndex].id;\r",
+									"\r",
+									"    // In Environment Variable speichern\r",
+									"    pm.environment.set(\"BlogpostId\", randomId);\r",
+									"\r",
+									"    console.log(\"Random BlogpostId gesetzt:\", randomId);\r",
+									"} else {\r",
+									"    console.log(\"Keine Blogposts in Response gefunden\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"title\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/blogposts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBlogpostByIdAsGuest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"title\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/blogposts/{{BlogpostId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"{{BlogpostId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBlogpostByAuthorAsGuest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"title\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/blogposts/author/ba804cb9-fa14-42a5-afaf-be488742fc54",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"author",
+								"ba804cb9-fa14-42a5-afaf-be488742fc54"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllBlogpostsPaginatedBySizeAsGuest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"GetAllBlogpostsPaginatedBySize only has max. 5 Elemente\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    let blogposts = pm.response.json();\r",
+									"\r",
+									"    pm.expect(blogposts.length).to.be.at.most(5);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/blogposts?page=0&size=5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllBlogpostsPaginatedByCategoryAsGuest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"No Blogposts with category FOOD available\", function () {\r",
+									"    let blogposts = pm.response.json();\r",
+									"\r",
+									"    blogposts.forEach(bp => {\r",
+									"        pm.expect(bp.category).to.not.eql(\"FOOD\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/blogposts?category=SPORT&page=0&size=5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "SPORT"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "UC5",
+			"item": [
+				{
+					"name": "UserLoginAuthor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseHeaders = pm.response.headers;",
+									"let bearerToken = responseHeaders.get(\"Authorization\");",
+									"pm.environment.set(\"bearerToken\", bearerToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateBlogpostAsUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Category is SPORT\", function () {\r",
+									"    let blogpost = pm.response.json();\r",
+									"    pm.expect(blogpost.category).to.eql(\"SPORT\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"let blogpost = pm.response.json();\r",
+									"\r",
+									"if (blogpost && blogpost.id) {\r",
+									"    pm.environment.set(\"createdBlogpostId\", blogpost.id);\r",
+									"    console.log(\"BlogpostId gesetzt:\", blogpost.id);\r",
+									"} else {\r",
+									"    console.log(\"Keine Blogpost ID in Response gefunden\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Hallo Test Titel\",\r\n  \"text\": \"Hallo, Test Text zum verwenden oder so\",\r\n  \"category\": \"SPORT\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/blogposts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UserLoginNotAuthor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseHeaders = pm.response.headers;",
+									"let bearerToken = responseHeaders.get(\"Authorization\");",
+									"pm.environment.set(\"bearerToken\", bearerToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user2@example.com\",\n  \"password\": \"1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBlogpostNotAuthor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Permission has been denied\", function () {\r",
+									"    let body = pm.response.json();\r",
+									"    pm.expect(body.errors.authorization).to.eql(\"You do not have permission to update this blogpost\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Veränderter Titel\",\r\n  \"text\": \"Verwendeter Text oder so\",\r\n  \"category\": \"SPORT\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/blogposts/{{createdBlogpostId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"{{createdBlogpostId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteBlogpostNotAuthor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Permission has been denied\", function () {\r",
+									"    let body = pm.response.json();\r",
+									"    pm.expect(body.errors.authorization).to.eql(\"You do not have permission to delete this blogpost\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/blogposts/{{createdBlogpostId}}",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts",
+								"{{createdBlogpostId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Edge Cases & Success-Fail Tests",
+			"item": [
+				{
+					"name": "UserLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseHeaders = pm.response.headers;",
+									"let bearerToken = responseHeaders.get(\"Authorization\");",
+									"pm.environment.set(\"bearerToken\", bearerToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/user/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateBlogpostAsUserShouldFail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Category is SPORT\", function () {\r",
+									"    let blogpost = pm.response.json();\r",
+									"    pm.expect(blogpost.category).to.not.eql(\"SPORT\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Fehlermeldung im Titel ist korrekt\", function () {\r",
+									"    let response = pm.response.json();\r",
+									"    pm.expect(response.errors.title).to.eql(\"Größe muss zwischen 3 und 80 sein\");\r",
+									"});\r",
+									"\r",
+									"let blogpost = pm.response.json();\r",
+									"\r",
+									"if (blogpost && blogpost.id) {\r",
+									"    pm.environment.set(\"createdBlogpostId\", blogpost.id);\r",
+									"    console.log(\"BlogpostId gesetzt:\", blogpost.id);\r",
+									"} else {\r",
+									"    console.log(\"Keine Blogpost ID in Response gefunden\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Ha\",\r\n  \"text\": \"Hallo, Test Text zum verwenden oder so\",\r\n  \"category\": \"SPORT\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/blogposts",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllBlogpostsPaginatedByCategoryShouldFail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Fehlermeldung enthält Hinweis auf ungültige Kategorie\", function () {\r",
+									"    let body = pm.response.json();\r",
+									"    pm.expect(body.errors.category).to.include(\"Diese Kategorie ist nicht verfügbar\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/blogposts?category=WEYO&page=0&size=5",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"blogposts"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "WEYO"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
