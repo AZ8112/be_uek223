@@ -33,7 +33,8 @@ public class BlogpostController {
     }
 
     @Operation(summary = "Get all blogposts with Pagination", description = "Returns a list of all blogposts in the database with author and creation date." +
-            " Pagination can be used to filter by the amount of entries that are shown and also which category. Available categories are: ADVICE, HEALTH, SPORT, FOOD, HISTORY")
+            " Pagination can be used to filter by the amount of entries that are shown and also which category. " +
+            " Available categories are: ADVICE, HEALTH, SPORT, FOOD, HISTORY, TECHNOLOGY, TRAVEL, LIFESTYLE, BUSINESS, EDUCATION, ENTERTAINMENT and OTHER")
     @GetMapping
     public ResponseEntity<List<BlogpostDTO>> findAllPaginated(
             @RequestParam(required = false) String category,
