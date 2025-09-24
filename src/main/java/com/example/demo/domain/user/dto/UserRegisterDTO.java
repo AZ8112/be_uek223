@@ -28,7 +28,7 @@ public class UserRegisterDTO extends AbstractDTO {
   private String email;
 
   @NotNull
-  @Size(min = 5, max = 200)
+  @Size(min = 4, max = 200)
   private String password;
 
   public UserRegisterDTO(UUID id, String firstName, String lastName, String email, String password) {
