@@ -4,12 +4,9 @@ import com.example.demo.domain.blogpost.dto.BlogpostDTO;
 import com.example.demo.domain.blogpost.dto.BlogpostMapper;
 import com.example.demo.domain.user.User;
 import com.example.demo.domain.user.UserService;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -71,7 +68,7 @@ public class BlogpostController {
 
     @Operation(summary = "Updates blogpost", description = "Updates a blogpost, via ID, with the new data, saving it in the database. Only accessible by role User and Admin. Also checks for authority BLOGPOST_UPDATE")
     @PutMapping("/{blogpostId}")
-    @PreAuthorize("hasRole('ADMIN') or hasAuthority('BLOGPOST_UPDATE')")
+    @PreAuthorize("(hasRole('ADMIN') or hasAuthority('BLOGPOST_UPDATE')) && @blogpostPermissionEvaluator.canModify(authentication.principal.user, #blogpostId)")
     public ResponseEntity<BlogpostDTO> updateBlogpost(@Valid @PathVariable UUID blogpostId, @RequestBody @Valid BlogpostDTO blogpostDTO) {
         Blogpost updatedBlogpost = blogpostService.updateBlogpost(blogpostId, blogpostDTO);
         return new ResponseEntity<>(blogpostMapper.toDTO(updatedBlogpost), HttpStatus.OK);
@@ -79,7 +76,7 @@ public class BlogpostController {
 
     @Operation(summary = "Deletes blogpost", description = "Deletes blogpost, via ID and removes it from the database. Only accessible by role User and Admin. Also checks for authority BLOGPOST_DELETE")
     @DeleteMapping("/{blogpostId}")
-    @PreAuthorize("hasRole('ADMIN') or hasAuthority('BLOGPOST_DELETE')")
+    @PreAuthorize("(hasRole('ADMIN') or hasAuthority('BLOGPOST_DELETE')) && @blogpostPermissionEvaluator.canModify(authentication.principal.user, #blogpostId)")
     public ResponseEntity<Void> deleteById(@PathVariable UUID blogpostId) {
         blogpostService.deleteById(blogpostId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

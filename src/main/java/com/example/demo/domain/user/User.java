@@ -53,5 +53,4 @@ public class User extends AbstractEntity {
     this.roles = roles;
     this.blogposts = blogposts;
   }
-
 }
