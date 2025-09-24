@@ -553,7 +553,8 @@
 									"});"
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -936,14 +937,15 @@
 									"    pm.response.to.have.status(403);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Permission has been denied\", function () {\r",
+									"pm.test(\"Access denied\", function () {\r",
 									"    let body = pm.response.json();\r",
-									"    pm.expect(body.errors.authorization).to.eql(\"You do not have permission to update this blogpost\");\r",
+									"    pm.expect(body.errors.authorization).to.eql(\"Access Denied\");\r",
 									"});\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
@@ -983,14 +985,16 @@
 									"    pm.response.to.have.status(403);\r",
 									"});\r",
 									"\r",
-									"pm.test(\"Permission has been denied\", function () {\r",
+									"pm.test(\"Access denied\", function () {\r",
 									"    let body = pm.response.json();\r",
-									"    pm.expect(body.errors.authorization).to.eql(\"You do not have permission to delete this blogpost\");\r",
+									"    pm.expect(body.errors.authorization).to.eql(\"Access Denied\");\r",
 									"});\r",
+									"\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
