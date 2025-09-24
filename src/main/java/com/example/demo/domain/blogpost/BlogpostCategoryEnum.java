@@ -5,5 +5,12 @@ public enum BlogpostCategoryEnum {
     SPORT,
     HEALTH,
     FOOD,
-    HISTORY
+    HISTORY,
+    TECHNOLOGY,
+    TRAVEL,
+    LIFESTYLE,
+    BUSINESS,
+    EDUCATION,
+    ENTERTAINMENT,
+    OTHER
 }
