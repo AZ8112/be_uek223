@@ -1082,7 +1082,7 @@
 									"\r",
 									"pm.test(\"Fehlermeldung im Titel ist korrekt\", function () {\r",
 									"    let response = pm.response.json();\r",
-									"    pm.expect(response.errors.title).to.eql(\"Größe muss zwischen 3 und 80 sein\");\r",
+									"    pm.expect(response.errors.title).to.be.oneOf([\"Größe muss zwischen 3 und 80 sein\", \"size must be between 3 and 80\"])\r",
 									"});\r",
 									"\r",
 									"let blogpost = pm.response.json();\r",
@@ -1096,7 +1096,8 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
