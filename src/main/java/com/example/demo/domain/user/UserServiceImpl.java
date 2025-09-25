@@ -46,4 +46,24 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     return save(user);
   }
 
+  @Override
+  public User updateById(UUID id, User entity) {
+    User existingUser = findById(id);
+
+    if (entity.getFirstName() != null) {
+      existingUser.setFirstName(entity.getFirstName());
+    }
+    if (entity.getLastName() != null) {
+      existingUser.setLastName(entity.getLastName());
+    }
+    if (entity.getEmail() != null) {
+      existingUser.setEmail(entity.getEmail());
+    }
+    if (entity.getRoles() != null && !entity.getRoles().isEmpty()) {
+      existingUser.setRoles(entity.getRoles());
+    }
+
+    return repository.save(existingUser);
+  }
+
 }
