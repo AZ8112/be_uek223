@@ -2,6 +2,18 @@
 
 Dieses Projekt beinhaltet 4 Entitäten, User, Authority, Role und Blogpost.
 
+---
+
+## Inhaltsverzeichnis
+* [Funktionen](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#funktionen)
+* [Voraussetzungen](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#voraussetzungen)
+* [Endpoints](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#endpoints)
+* [Ausführen](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#ausf%C3%BChren)
+* [Verwendung von Postman](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#verwendung-von-postman)
+* [Swagger](https://github.com/MysterionNY/BE_uek223_Me_Az_Le/tree/main?tab=readme-ov-file#swagger)
+
+---
+
 ## Funktionen
 * CRUD Methoden für User und Blogpost
 * Es kann ein User erstellt werden, welcher Rollen und Blogposts hat. Der User kann mehrere Rollen und Blogposts haben.
