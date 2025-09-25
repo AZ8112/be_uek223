@@ -86,7 +86,7 @@ gefunden werden.
 2. Die collection json aus dem repo auswählen und hinzufügen
 
 
-3. Die environemtn json aus dem repo auswählen und unter Environment auf die selbe Weise hinzufügen
+3. Die environment json aus dem repo auswählen und unter Environment auf die selbe Weise hinzufügen
 
 
 4. Auf die 3 Punkte klicken und "Run" auswählen
