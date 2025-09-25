@@ -1,17 +1,14 @@
 package com.example.demo.domain.user;
 
 import com.example.demo.core.generic.AbstractEntity;
+import com.example.demo.domain.blogpost.Blogpost;
 import com.example.demo.domain.role.Role;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+
+import java.util.*;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,17 +21,24 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class User extends AbstractEntity {
-
   @Column(name = "first_name")
+  @Size(min = 2, max = 20)
+  @NotNull
   private String firstName;
 
   @Column(name = "last_name")
+  @Size(min = 2, max = 20)
+  @NotNull
   private String lastName;
 
   @Column(name = "email", unique = true, nullable = false)
+  @Size(min = 1, max = 200)
+  @NotNull
   private String email;
 
   @Column(name = "password")
+  @Size(min = 4, max = 200)
+  @NotNull
   private String password;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -42,13 +46,16 @@ public class User extends AbstractEntity {
              inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
   private Set<Role> roles = new HashSet<>();
 
-  public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles) {
+  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Blogpost> blogposts = new ArrayList<>();
+
+  public User(UUID id, String firstName, String lastName, String email, String password, Set<Role> roles, ArrayList<Blogpost> blogposts) {
     super(id);
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.password = password;
     this.roles = roles;
+    this.blogposts = blogposts;
   }
-
 }
