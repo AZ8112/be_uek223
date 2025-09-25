@@ -2,7 +2,6 @@ package com.example.demo.domain.blogpost.dto;
 
 import com.example.demo.core.generic.AbstractMapper;
 import com.example.demo.domain.blogpost.Blogpost;
-import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

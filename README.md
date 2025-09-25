@@ -63,30 +63,29 @@ Vorab: Die Datei für die Postman-Tests können direkt im root ordner unter
 
 ```OurSpace.postman_collection.json```
 
+```OurSpaceEnv.postman_environment.json```
+
 gefunden werden.
 
 1. In Postman auf Import klicken
 
 ![Postman][postman]
 
-2. Die json aus dem repo auswählen und hinzufügen
+2. Die collection json aus dem repo auswählen und hinzufügen
 
-3. Auf die 3 Punkte klicken und "Run" auswählen
+
+3. Die environemtn json aus dem repo auswählen und unter Environment auf die selbe Weise hinzufügen
+
+
+4. Auf die 3 Punkte klicken und "Run" auswählen
 
 ![Run collection][runCollection]
 
-4. Run OurSpace klicken
+5. Run OurSpace klicken
 
 ![Run OurSpace][runtest]
 
 Diese collection kann beliebig häufig gerunned werden. 
-
-## Verwendung von JUnit
-Die Tests für JUnit können im Ordner 
-
-```BE_uek223_Me_Az_Le/src/test/java/com.example.demo/webcontext.domain/blogpost/BlogpostControllerTest```
-
-gefunden werden. In diesen Tests werden die Usecases 1 & 4 getestet. Dabei wird das Verhalten auf erfolgreiche, erfolgreiche-fail tests und edge cases überprüft.
 
 ## Swagger
 In diesen Tests werden die Usecases 1 - 5 getestet. Mit detaillierten Beschreibungen und Zusammenfassenden Titel um einfach verstehen zu können für was welche Endpoints benutzt werden und wer Zugriff auf diese hat. 

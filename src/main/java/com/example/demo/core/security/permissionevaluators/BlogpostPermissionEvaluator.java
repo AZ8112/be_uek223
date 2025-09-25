@@ -4,7 +4,6 @@ import com.example.demo.domain.blogpost.BlogpostRepository;
 import com.example.demo.domain.user.User;
 import org.springframework.stereotype.Component;
 import com.example.demo.domain.role.Role;
-import org.springframework.stereotype.Repository;
 import com.example.demo.domain.blogpost.Blogpost;
 
 import java.util.*;
@@ -17,6 +16,7 @@ public class BlogpostPermissionEvaluator {
     public BlogpostPermissionEvaluator(BlogpostRepository blogpostRepository) {
         this.blogpostRepository = blogpostRepository;
     }
+    // Checks if the requested user is the owner or has the admin role
     public boolean canModify(User currentUser, UUID blogpostId) {
         if (currentUser == null || blogpostId == null) return false;
 

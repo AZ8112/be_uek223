@@ -17,7 +17,7 @@ public class BlogpostDTO extends AbstractDTO {
     @Size(min = 3, max = 80)
     private String title;
     @NotNull
-    @Size(min = 1, max = 8000)
+    @Size(min = 5, max = 8000)
     private String text;
     @NotNull
     private BlogpostCategoryEnum category;

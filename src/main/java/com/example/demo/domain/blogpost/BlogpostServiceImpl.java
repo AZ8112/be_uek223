@@ -4,12 +4,10 @@ import com.example.demo.core.exception.InvalidCategoryException;
 import com.example.demo.core.generic.AbstractServiceImpl;
 import com.example.demo.domain.blogpost.dto.BlogpostDTO;
 import com.example.demo.domain.user.User;
-import com.example.demo.domain.role.Role;
 import com.example.demo.domain.user.UserDetailsImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -32,9 +30,14 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         this.blogpostRepository = blogpostRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Page<Blogpost> findAllPaginated(String category, Pageable pageable) {
         Page<Blogpost> blogpostPage;
 
+        // Checks the chosen category if it exists
         if (category != null && !category.isBlank()) {
             final BlogpostCategoryEnum catEnum;
             try {
@@ -56,7 +59,10 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         return blogpostPage;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Blogpost findById(UUID id){
         return blogpostRepository.findById(id)
                 .orElseThrow(() -> {
@@ -65,6 +71,10 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Blogpost> findBlogpostsByAuthor(User author) {
         List<Blogpost> posts = blogpostRepository.findByAuthor(author);
         if (posts.isEmpty()){
@@ -75,6 +85,10 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         return posts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Blogpost createBlogpost(Blogpost newBlogpost){
         if(newBlogpost == null ||
                 newBlogpost.getTitle() == null ||
@@ -83,6 +97,7 @@ public class BlogpostServiceImpl extends AbstractServiceImpl<Blogpost> implement
         ){
             throw new IllegalArgumentException("Invalid blogpost data: title, text and category cannot be null.");
         }
+        // Gets the current user that creates the request to set him as the user automatically
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
         User currentUser = userDetails.user();
