@@ -6,6 +6,17 @@ plugins {
 	id "org.sonarqube" version "4.3.1.3277"
 }
 
+sonar {
+	properties {
+		property "sonar.projectKey", "nypag-1_uk-223"
+		property "sonar.organization", "nypag-1"
+		property "sonar.host.url", "https://sonarcloud.io"
+		property "sonar.qualitygate.wait", true
+		property "sonar.token", System.getenv("SONAR_TOKEN")
+	}
+}
+
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 java {
